@@ -81,7 +81,7 @@ export function TeamSwitcher({
                 <div className="flex size-6 items-center justify-center rounded-sm border">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarFallback className="rounded-lg">
-                      {getInitials(activeTeam.name)}
+                      {getInitials(team.name)}
                     </AvatarFallback>
                   </Avatar>
                 </div>

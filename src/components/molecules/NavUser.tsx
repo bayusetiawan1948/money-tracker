@@ -85,8 +85,8 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
+            <DropdownMenuItem className="text-red-700">
+              <LogOut color="oklch(0.505 0.213 27.518)" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
