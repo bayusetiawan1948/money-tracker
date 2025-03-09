@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { formatCurrency } from '@/lib/utils';
+import { NumberField } from '@/components/ui/input-number';
 
 type innerValue = {
   title: string;
@@ -133,6 +134,7 @@ const Transaction = () => {
       category: '',
       description: '',
     });
+    console.info(formData);
   };
 
   const countIncome = () => {
@@ -160,7 +162,7 @@ const Transaction = () => {
             name="title"
             id="title"
             value={formData.title}
-            onChange={(e) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({ ...formData, title: e.target.value })
             }
             required
@@ -168,19 +170,14 @@ const Transaction = () => {
         </div>
         <div>
           <label htmlFor="amount">Jumlah</label>
-          <Input
-            name="amount"
+          <NumberField
             id="amount"
-            type="number"
-            inputMode="numeric"
             value={formData.amount}
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                ['amount']: Number(e.target.value),
-              });
-            }}
-            required
+            showAsCurrency={true}
+            onChange={(newAmount) =>
+              setFormData({ ...formData, amount: newAmount })
+            }
+            {...{ required: true }}
           />
         </div>
         <div>
@@ -190,7 +187,9 @@ const Transaction = () => {
             id="date"
             type="date"
             value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormData({ ...formData, date: e.target.value })
+            }
             required
           />
         </div>
@@ -219,7 +218,7 @@ const Transaction = () => {
           <Input
             name="account"
             value={formData.account}
-            onChange={(e) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({ ...formData, account: e.target.value })
             }
             required
@@ -254,7 +253,7 @@ const Transaction = () => {
             id="description"
             name="description"
             value={formData.description}
-            onChange={(e) =>
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setFormData({ ...formData, description: e.target.value })
             }
           />
@@ -264,17 +263,17 @@ const Transaction = () => {
         </Button>
       </form>
       <div>
-        <Table>
+        <Table className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead>title</TableHead>
-              <TableHead>amount</TableHead>
-              <TableHead>date</TableHead>
-              <TableHead>type</TableHead>
-              <TableHead>account</TableHead>
-              <TableHead>category</TableHead>
-              <TableHead>description</TableHead>
+              <TableHead>Judul</TableHead>
+              <TableHead>Jumlah</TableHead>
+              <TableHead>Tanggal</TableHead>
+              <TableHead>Tipe</TableHead>
+              <TableHead>Akun</TableHead>
+              <TableHead>Kategori</TableHead>
+              <TableHead>Deskripsi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -294,10 +293,12 @@ const Transaction = () => {
             <TableRow className="text-green-600">
               <TableCell>Total Income</TableCell>
               <TableCell>{formatCurrency(countIncome())}</TableCell>
+              <TableCell colSpan={5}></TableCell>
             </TableRow>
             <TableRow className="text-red-600">
               <TableCell>Total Expenses</TableCell>
               <TableCell>{formatCurrency(countExpenses())}</TableCell>
+              <TableCell colSpan={5}></TableCell>
             </TableRow>
           </TableFooter>
         </Table>
